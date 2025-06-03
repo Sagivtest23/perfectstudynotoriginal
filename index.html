@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="he">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfect Study</title>
+    <link rel="icon" href="pics/chips.png" type="image/icon type">
+    <link rel="stylesheet" href="Style.css">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@200&amp;family=Secular+One&amp;display=swap" rel="stylesheet">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik+Bubbles&family=Rubik+Scribble&display=swap" rel="stylesheet">
+
+    <style>
+        .carousel-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            margin: auto;
+            max-width: 100%;
+        }
+
+        .carousel {
+            display: flex;
+            transition: transform 0.5s ease;
+            gap: 10px;
+        }
+
+        .carousel-item {
+            flex: 0 0 25%;
+            text-align: center;
+            padding: 1%;
+        }
+
+        .carousel-item img {
+            width: 90%;
+            height: auto;
+            object-fit: cover;
+            border-radius: 8%;
+            margin-bottom: 5px;
+        }
+
+        .carousel-item img:hover {
+            transform: scale(1.05);
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .carousel-navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 60%;
+            margin: 10px auto;
+        }
+
+        .carousel-btn {
+            background-color: rgba(0, 0, 0, 0.6);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s;
+        }
+
+        .carousel-btn:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+
+        .carousel-btn.right {
+            margin-left: 5%;
+        }
+        
+        @media (max-width: 768px) {
+            .carousel-container {
+                max-width: 90%;
+            }
+
+            .carousel-navigation {
+                width: 85%;
+            }
+
+            .carousel-item {
+                flex: 0 0 35%;
+            }
+
+            .carousel-item img {
+                width: 85%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .carousel-container {
+                max-width: 100%;
+            }
+
+            .carousel-navigation {
+                width: 100%;
+            }
+
+            .carousel-item {
+                flex: 0 0 50%;
+            }
+
+            .carousel-item img {
+                width: 80%;
+            }
+
+            .carousel-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const carousel = document.querySelector(".carousel");
+            const leftBtn = document.querySelector(".carousel-btn.left");
+            const rightBtn = document.querySelector(".carousel-btn.right");
+
+            let currentIndex = 0;
+            const items = document.querySelectorAll(".carousel-item");
+            const totalItems = items.length;
+
+            function getVisibleItems() {
+                const containerWidth = document.querySelector(".carousel-container").clientWidth;
+                const itemWidth = items[0].clientWidth * 1.1;
+                return Math.floor(containerWidth / itemWidth);
+            }
+
+            function updateCarousel() {
+                const itemWidth = items[0].clientWidth;
+                const offset = -currentIndex * itemWidth;
+                carousel.style.transform = `translateX(${offset}px)`;
+            }
+
+            function moveRight() {
+                const visibleItems = getVisibleItems();
+                if (currentIndex < totalItems - visibleItems) {
+                    currentIndex++;
+                    updateCarousel();
+                }
+            }
+
+            function moveLeft() {
+                if (currentIndex > 0) {
+                    currentIndex--;
+                    updateCarousel();
+                }
+            }
+
+            rightBtn.addEventListener("click", moveRight);
+            leftBtn.addEventListener("click", moveLeft);
+
+            window.addEventListener("resize", updateCarousel);
+
+            updateCarousel();
+        });
+    </script>
+</head>
+<body>
+    <table class = "Table" id = "container" cellpadding = "5" cellspacing = "0" border = "1">
+        <tr style = "background-color: rgb(0, 0, 0, 0.10);">
+            <td class = "Logo">
+                <a href = "index.html"><img src="pics/logo.png" width="90%"></a>
+            </td>
+
+            <td class = "Instagram">
+                <a href = "https://www.instagram.com/perfect_study1?igsh=MWJtYm11czZpdXRhYQ== " target="_blank"><img src="pics/instagram.png"></a> <!--אינסטגרם-->
+            </td>
+        </tr>
+        <tr class = "Nav">
+            <td colspan = "3" style="border: 2px solid rgba(128, 128, 128, 0.8);">
+                <div class="nav-buttons">
+                    <a href="index.html">דף הבית</a>
+                    <a href="about.html">אודות</a>
+                    <a href="allsubjects.html">לכל המקצועות</a>
+                    <a href="contact.html">צור קשר</a>
+                    <a href="login.html">התחברות</a>
+                </div>
+            </td>
+        </tr>
+
+        <tr class = "In_The_Page">
+            <td colspan = "3" valign = "top" style="border: 2px solid white;">
+                <div class="content">
+                    <img src="pics/index1.png" style="width: 95%;"> 
+                    <br><br><br>
+                    <img src="pics/index2.png" style="width: 95%;"> 
+                    <br><br><br><br>
+
+                    <div class="carousel-navigation">
+                        <button class="carousel-btn left">&#8592;</button>
+                        <div class="carousel-container">
+                            <div class="carousel">
+                                <div class="carousel-item">
+                                    <a href="404.html">
+                                        <img src="pics/books/math.png" alt="מתמטיקה">
+                                    </a>
+                                </div>
+                                <div class="carousel-item">
+                                    <a href="404.html">
+                                        <img src="pics/books/english.png" alt="אנגלית">
+                                    </a>
+                                </div>
+                                <div class="carousel-item">
+                                    <a href="404.html">
+                                        <img src="pics/books/pc.png" alt="מדעי המחשב">
+                                    </a>
+                                </div>
+                                <div class="carousel-item">
+                                    <a href="404.html">
+                                        <img src="pics/books/phyisics.png" alt="פיזיקה">
+                                    </a>
+                                </div>
+                                <div class="carousel-item">
+                                    <a href="404.html">
+                                        <img src="pics/books/seince.png" alt="מדעים">
+                                    </a>
+                                </div>
+                                <div class="carousel-item">
+                                    <a href="404.html">
+                                        <img src="pics/books/biology.png" alt="ביולוגיה">
+                                    </a>
+                                </div>
+                                <div class="carousel-item">
+                                    <a href="404.html">
+                                        <img src="pics/books/elect.png" alt="אלקטרוניקה">
+                                    </a>
+                                </div>
+                                <div class="carousel-item">
+                                    <a href="404.html">
+                                        <img src="pics/books/chimi.png" alt="כימיה">
+                                    </a>
+                                </div>
+                                <div class="carousel-item">
+                                    <a href="404.html">
+                                        <img src="pics/books/biothec.png" alt="ביוטכנולוגיה">
+                                    </a>
+                                </div>
+                                <div class="carousel-item">
+                                    <a href="404.html">
+                                        <img src="pics/books/geografy.png" alt="גאוגרפיה">
+                                    </a>
+                                </div>
+                                <div class="carousel-item">
+                                    <a href="404.html">
+                                        <img src="pics/books/azrhaot.png" alt="אזרחות">
+                                    </a>
+                                </div>
+                                <div class="carousel-item">
+                                    <a href="404.html">
+                                        <img src="pics/books/hebrew.png" alt="עברית">
+                                    </a>
+                                </div>
+                                <div class="carousel-item">
+                                    <a href="404.html">
+                                        <img src="pics/books/arabic.png" alt="ערבית">
+                                    </a>
+                                </div>
+                                <div class="carousel-item">
+                                    <a href="404.html">
+                                        <img src="pics/books/history.png" alt="היסטוריה">
+                                    </a>
+                                </div>
+                                <div class="carousel-item">
+                                    <a href="404.html">
+                                        <img src="pics/books/bible.png" alt="תנך">
+                                    </a>
+                                </div>
+                                <div class="carousel-item">
+                                    <a href="404.html">
+                                        <img src="pics/books/sifrot.png" alt="ספרות">
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="carousel-btn right">&#8594;</button>
+                    </div>
+                    <br>
+                </div>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

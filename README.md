@@ -1,1 +1,1 @@
-# perfectstudynotoriginal
+# perfectstudy.github.io

@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="he">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfect Study</title>
+    <link rel="icon" href="pics/chips.png" type="image/icon type">
+    <link rel="stylesheet" href="Style.css">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@200&amp;family=Secular+One&amp;display=swap" rel="stylesheet">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik+Bubbles&family=Rubik+Scribble&display=swap" rel="stylesheet">
+
+    <style>
+        form {
+            text-align: center;
+            margin-top: 30px;
+            direction: rtl;
+        }
+
+        .form-table {
+            margin: 0 auto;
+            width: 60%;
+        }
+
+        .form-label {
+            color: black;
+            font-size: 22px;
+            padding: 10px;
+            text-align: right;
+        }
+
+        input[type="text"], input[type="password"] {
+            color: black;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 22px;
+            width: 95%;
+            padding: 8px;
+            border: 1px solid black;
+            border-radius: 5px;
+            direction: ltr;
+        }
+
+        #submit, #reset {
+            background-color: black;
+            color: white;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 20px;
+            margin: 20px 10px;
+            width: 90px;
+            height: 45px;
+            border-radius: 50px;
+            cursor: pointer;
+            border: none;
+        }
+
+        #submit:hover, #reset:hover {
+            background-color: #333;
+            transition: 0.4s;
+        }
+
+        @media (max-width: 768px) {
+            .form-table {
+                width: 90%;
+            }
+
+            input[type="text"], input[type="password"] {
+                font-size: 20px;
+            }
+
+            #submit, #reset {
+                font-size: 18px;
+                width: 80px;
+                height: 40px;
+            }
+
+            .form-label {
+                font-size: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            input[type="text"], input[type="password"] {
+                font-size: 18px;
+            }
+
+            .form-label {
+                font-size: 18px;
+            }
+
+            #submit, #reset {
+                font-size: 16px;
+                width: 70px;
+                height: 35px;
+            }
+        }
+
+        .error-message {
+            color: red;
+            margin: 10px 0;
+            font-size: 16px;
+            text-align: center;
+        }
+
+        .success-message {
+            color: green;
+            margin: 10px 0;
+            font-size: 16px;
+            text-align: center;
+        }
+
+        .auth-toggle {
+            color: blue;
+            text-decoration: underline;
+            cursor: pointer;
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <table class = "Table" id = "container" cellpadding = "5" cellspacing = "0" border = "1">
+        <tr style = "background-color: rgb(0, 0, 0, 0.10);">
+            <td class = "Logo">
+                <a href = "index.html"><img src="pics/logo.png" width="90%"></a>
+            </td>
+
+            <td class = "Instagram">
+                <a href = "https://www.instagram.com/perfect_study1?igsh=MWJtYm11czZpdXRhYQ== " target="_blank"><img src="pics/instagram.png"></a> <!--אינסטגרם-->
+            </td>
+        </tr>
+        <tr class = "Nav">
+            <td colspan = "3" style="border: 2px solid rgba(128, 128, 128, 0.8);">
+                <div class="nav-buttons">
+                    <a href="index.html">דף הבית</a>
+                    <a href="about.html">אודות</a>
+                    <a href="allsubjects.html">לכל המקצועות</a>
+                    <a href="contact.html">צור קשר</a>
+                    <a href="login.html">התחברות</a>
+                </div>
+            </td>
+        </tr>
+
+        <tr class = "In_The_Page">
+            <td colspan = "3" valign = "top" style="border: 2px solid white;">
+                <div class="content">
+                    <form id="authForm">
+                        <table class="form-table">
+                            <tr>
+                                <td class="form-label">אימייל:</td>
+                                <td><input type="email" id="email" name="email" required></td>
+                            </tr>
+                            <tr><td colspan="2"><br></td></tr>
+                            <tr>
+                                <td class="form-label">סיסמה:</td>
+                                <td><input type="password" id="password" name="password" required minlength="6"></td>
+                            </tr>
+                            <tr><td colspan="2"><br></td></tr>
+                            <tr>
+                                <td colspan="2">
+                                    <input type="submit" id="submit" value="התחבר">
+                                    <input type="reset" id="reset" value="איפוס">
+                                </td>
+                            </tr>
+                        </table>
+                    </form>
+                    <div id="loading" class="loading">טוען...</div>
+                    <div id="errorMessage" class="error-message"></div>
+                    <div id="successMessage" class="success-message"></div>
+                    <p class="auth-toggle" id="toggleAuth">אין לך חשבון? הירשם כאן</p>
+                    <br>
+                </div>
+            </td>
+        </tr>
+    </table>
+
+    <script type="module">
+        import { signIn, signUp } from './firebase-config.js';
+
+        const authForm = document.getElementById('authForm');
+        const toggleAuth = document.getElementById('toggleAuth');
+        const errorMessage = document.getElementById('errorMessage');
+        const successMessage = document.getElementById('successMessage');
+        const submitButton = document.getElementById('submit');
+        const loadingDiv = document.getElementById('loading');
+        let isLogin = true;
+
+        toggleAuth.addEventListener('click', () => {
+            isLogin = !isLogin;
+            submitButton.value = isLogin ? 'התחבר' : 'הירשם';
+            toggleAuth.textContent = isLogin ? 'אין לך חשבון? הירשם כאן' : 'יש לך חשבון? התחבר כאן';
+            errorMessage.textContent = '';
+            successMessage.textContent = '';
+        });
+
+        authForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            errorMessage.textContent = '';
+            successMessage.textContent = '';
+            loadingDiv.style.display = 'block';
+            submitButton.disabled = true;
+
+            try {
+                const result = isLogin ? 
+                    await signIn(email, password) : 
+                    await signUp(email, password);
+
+                if (result.success) {
+                    successMessage.textContent = isLogin ? 
+                        'התחברת בהצלחה!' : 
+                        'נרשמת בהצלחה!';
+                    // Redirect to home page after successful login/signup
+                    setTimeout(() => {
+                        window.location.href = 'index.html';
+                    }, 2000);
+                } else {
+                    let errorText = result.error;
+                    // Translate common Firebase errors to Hebrew
+                    if (errorText.includes('auth/email-already-in-use')) {
+                        errorText = 'כתובת האימייל כבר בשימוש';
+                    } else if (errorText.includes('auth/invalid-email')) {
+                        errorText = 'כתובת אימייל לא תקינה';
+                    } else if (errorText.includes('auth/weak-password')) {
+                        errorText = 'הסיסמה חלשה מדי. יש להשתמש ב-6 תווים לפחות';
+                    } else if (errorText.includes('auth/user-not-found') || errorText.includes('auth/wrong-password')) {
+                        errorText = 'אימייל או סיסמה שגויים';
+                    }
+                    errorMessage.textContent = errorText;
+                }
+            } catch (error) {
+                errorMessage.textContent = 'אירעה שגיאה. אנא נסה שוב.';
+            } finally {
+                loadingDiv.style.display = 'none';
+                submitButton.disabled = false;
+            }
+        });
+    </script>
+</body>
+</html>
