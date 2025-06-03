@@ -18,6 +18,15 @@ const auth = getAuth(app);
 // Function to update navigation based on auth state
 function updateNavigation(user) {
     const navButtons = document.querySelector('.nav-buttons');
+    if (!navButtons) return;
+
+    // Remove existing user info if it exists
+    const existingUserInfo = document.querySelector('.user-info');
+    if (existingUserInfo) {
+        existingUserInfo.remove();
+    }
+
+    // Find the login link
     const loginLink = navButtons.querySelector('a[href="login.html"]');
     
     if (user) {
@@ -33,7 +42,7 @@ function updateNavigation(user) {
             <span>שלום, ${user.email}</span>
             <button onclick="window.signOut()" class="logout-btn">התנתק</button>
         `;
-        navButtons.appendChild(userInfo);
+        navButtons.insertBefore(userInfo, navButtons.firstChild);
     } else {
         // User is not logged in
         if (!loginLink) {
@@ -41,12 +50,6 @@ function updateNavigation(user) {
             newLoginLink.href = 'login.html';
             newLoginLink.textContent = 'התחברות';
             navButtons.appendChild(newLoginLink);
-        }
-        
-        // Remove user info if it exists
-        const userInfo = document.querySelector('.user-info');
-        if (userInfo) {
-            userInfo.remove();
         }
     }
 }
